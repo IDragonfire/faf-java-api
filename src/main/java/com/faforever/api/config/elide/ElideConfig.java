@@ -1,5 +1,6 @@
 package com.faforever.api.config.elide;
 
+import com.faforever.api.config.elide.checks.IsLeader;
 import com.faforever.api.config.elide.checks.IsOwner;
 import com.faforever.api.data.JsonApiController;
 import com.yahoo.elide.Elide;
@@ -29,6 +30,7 @@ public class ElideConfig {
   public Elide elide(EntityManagerFactory entityManagerFactory) {
     ConcurrentHashMap<String, Class<? extends Check>> checks = new ConcurrentHashMap<>();
     checks.put("user is this user", IsOwner.Inline.class);
+    checks.put("is leader", IsLeader.Inline.class);
 
     EntityDictionary entityDictionary = new EntityDictionary(checks);
 

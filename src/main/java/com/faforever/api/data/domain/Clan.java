@@ -1,6 +1,7 @@
 package com.faforever.api.data.domain;
 
 import com.yahoo.elide.annotation.Include;
+import com.yahoo.elide.annotation.UpdatePermission;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "clan_list")
 @Include(rootLevel = true, type = "clan")
+@UpdatePermission(expression = "is leader")
 public class Clan {
 
   private int clanId;
