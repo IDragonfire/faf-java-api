@@ -46,9 +46,7 @@ public class JsonApiController {
             produces = JSON_API_MEDIA_TYPE,
             value = {"/{entity}/{id}", "/{entity}/{id}/relationships/{entity2}"})
     @Transactional
-    public String jsonApiPatch(
-            final HttpServletRequest request,
-            Authentication authentication) throws IOException {
+    public String jsonApiPatch(final HttpServletRequest request, Authentication authentication) throws IOException {
         // Note: We can only read the body ONCE with getReadder
         String body = request.getReader().lines().collect(Collectors.joining());
         // TODO: only authenticated user should have access to patch otherwise this can be a performance issue
@@ -59,6 +57,22 @@ public class JsonApiController {
                 body,
                 authentication != null ? authentication.getPrincipal() : null
         ).getBody();
+    }
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping(
+            method = RequestMethod.POST,
+            produces = JSON_API_MEDIA_TYPE,
+            value = {"/{entity}", "/{entity}/{id}/relationships/{entity2}"})
+    @Transactional
+    public String jsonApiPost(final HttpServletRequest request, Authentication authentication) throws IOException {
+        // Note: We can only read the body ONCE with getReadder
+        String body = request.getReader().lines().collect(Collectors.joining());
+        // TODO: only authenticated user should have access to patch otherwise this can be a performance issue
+        // e.g. if somebody send a lot of data ...
+        return elide.post(getJsonApiPath(request),
+                body,
+                authentication != null ? authentication.getPrincipal() : null).getBody();
     }
 
     public static String getJsonApiPath(HttpServletRequest request) {
