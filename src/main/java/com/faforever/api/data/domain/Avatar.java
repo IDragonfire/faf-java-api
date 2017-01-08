@@ -2,11 +2,7 @@ package com.faforever.api.data.domain;
 
 import com.yahoo.elide.annotation.Include;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -19,11 +15,11 @@ public class Avatar {
   private String tooltip;
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   public int getId() {
     return id;
   }
-
   public void setId(int id) {
     this.id = id;
   }
