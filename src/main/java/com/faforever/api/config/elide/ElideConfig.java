@@ -1,5 +1,6 @@
 package com.faforever.api.config.elide;
 
+import com.faforever.api.config.elide.checks.CanKickMember;
 import com.faforever.api.config.elide.checks.IsClanLeader;
 import com.faforever.api.config.elide.checks.IsOwner;
 import com.faforever.api.data.JsonApiController;
@@ -27,11 +28,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ElideConfig {
 
   public static final String USER_IS_CLAN_LEADER = "user is clan leader";
+  public static final String USER_CAN_KICK_CLAN_MEMBER = "user can kick clan member";
   @Bean
   public Elide elide(EntityManagerFactory entityManagerFactory) {
     ConcurrentHashMap<String, Class<? extends Check>> checks = new ConcurrentHashMap<>();
     checks.put("user is this user", IsOwner.Inline.class);
     checks.put(USER_IS_CLAN_LEADER, IsClanLeader.Inline.class);
+    checks.put(USER_CAN_KICK_CLAN_MEMBER, CanKickMember.Inline.class);
 
     EntityDictionary entityDictionary = new EntityDictionary(checks);
 

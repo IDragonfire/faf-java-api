@@ -1,5 +1,7 @@
 package com.faforever.api.data.domain;
 
+import com.faforever.api.config.elide.ElideConfig;
+import com.yahoo.elide.annotation.DeletePermission;
 import com.yahoo.elide.annotation.Include;
 import lombok.Data;
 
@@ -16,6 +18,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "clan_membership")
 @Include(rootLevel = true, type = "clan_membership")
+// TODO: currently not working no idea why
+//@DeletePermission(expression = ElideConfig.USER_CAN_KICK_CLAN_MEMBER)
 @Data
 public class ClanMembership {
 

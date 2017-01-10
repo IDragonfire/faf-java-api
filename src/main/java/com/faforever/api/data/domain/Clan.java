@@ -16,6 +16,8 @@ import java.util.List;
 @Table(name = "clan")
 @Include(rootLevel = true, type = "clan")
 @UpdatePermission(expression = ElideConfig.USER_IS_CLAN_LEADER)
+// TODO: currently not working no idea why
+// @DeletePermission(expression = ElideConfig.USER_IS_CLAN_LEADER)
 @Data
 public class Clan {
 

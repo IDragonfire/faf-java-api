@@ -1,10 +1,13 @@
 package com.faforever.api.data;
 
 import com.yahoo.elide.Elide;
+import com.yahoo.elide.ElideResponse;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,6 +42,22 @@ public class JsonApiController {
         new MultivaluedHashMap<>(allRequestParams),
         authentication != null ? authentication.getPrincipal() : null
     ).getBody();
+  }
+
+  @CrossOrigin(origins = "*")
+  @RequestMapping(
+      method = RequestMethod.DELETE,
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      value = {"/{entity}/{id}", "/{entity}/{id}/relationships/{entity2}"})
+  @Transactional
+  public String jsonApiDelete(
+      final HttpServletRequest request,
+      final Authentication authentication) {
+    ElideResponse response = elide.delete(
+        getJsonApiPath(request),
+        null,
+        authentication != null ? authentication.getPrincipal() : null);
+    return response.getBody();
   }
 
   public static String getJsonApiPath(HttpServletRequest request) {
